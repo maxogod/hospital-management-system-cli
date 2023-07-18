@@ -1,9 +1,10 @@
 $sourceFiles = @(
-    ".\src\system.c",
+    ".\src\tests\run_tests.c",
+    ".\src\tests\record_test.c",
     ".\src\records\record.c",
-    ".\src\file_manager\file_manager.c"
+    ".\src\file_manager\file_manager.c" 
 )
-$outputFile = "hospital_system"
+$outputFile = "test"
 
 $gccCommand = "gcc " + ($sourceFiles -join " ") + " -o $outputFile"
 

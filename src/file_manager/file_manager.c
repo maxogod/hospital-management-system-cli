@@ -23,10 +23,52 @@ void add_new_record(const char* filename, record_t* record) {
 }
 
 record_t* find_record_by_name(const char* filename, char* name) {
-    return NULL;
+    FILE* file = fopen(filename, "r");
+    if (!file) {
+        return NULL;
+    }
+
+    record_t* found_record = NULL;
+    char line[256];
+    while (fgets(line, sizeof(line), file)) {
+        
+        char* name_token = strtok(line, ",");
+        if (name_token && strcmp(name_token, name) == 0) {
+            long id = atol(strtok(NULL, ","));
+            int phone_number = atoi(strtok(NULL, ","));
+            char* reason = strtok(NULL, ",");
+            int cost = atoi(strtok(NULL, ","));
+
+            found_record = create_record(name_token, id, phone_number, reason, cost);
+            break;
+        }
+    }
+    fclose(file);
+    return found_record;
 }
 
 record_t* find_record_by_id(const char* filename, long id) {
-    return NULL;
+    FILE* file = fopen(filename, "r");
+    if (!file) {
+        return NULL;
+    }
+
+    record_t* found_record = NULL;
+    char line[256];
+    while (fgets(line, sizeof(line), file)) {
+        
+        char* name = strtok(line, ",");
+        long id_token = atol(strtok(NULL, ","));
+        if (id_token && id == id_token) { 
+            int phone_number = atoi(strtok(NULL, ","));
+            char* reason = strtok(NULL, ",");
+            int cost = atoi(strtok(NULL, ","));
+
+            found_record = create_record(name, id_token, phone_number, reason, cost);
+            break;
+        }
+    }
+    fclose(file);
+    return found_record;
 }
 

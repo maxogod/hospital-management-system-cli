@@ -1,7 +1,10 @@
 #ifndef FILE_MANAGER_H
 
+#include "../records/record.h"
+
 #define HOSPITALIZATION_FILE "hospitalizations.csv"
 #define CONSULTATION_FILE "consultations.csv"
+#define HISTORY_FILE "history.csv"
 
 void add_new_record(const char* filename, record_t* record);
 
