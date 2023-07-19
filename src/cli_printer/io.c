@@ -32,7 +32,7 @@ void creating_record(char* name, long id, int phone_number, char* reason, int co
     printf(
             "~~ %s\n\n"
             "\033[1;37m~ name: %s\n"
-            "~ id: %d\n"
+            "~ id: %ld\n"
             "~ phone number: %d\n"
             "~ reason: %s\n"
             "~ cost: $%d\033[0m\n\n"
@@ -57,7 +57,7 @@ void removing_record(record_t* record, char* record_type) {
         printf(
             "~~ %s\n\n"
             "\033[1;37m~ name: %s\n"
-            "~ id: %d\n"
+            "~ id: %ld\n"
             "~ phone number: %d\n"
             "~ reason: %s\n"
             "~ cost: $%d\033[0m\n\n"
@@ -81,7 +81,7 @@ void show_all_records(char* filename, record_array_t* records) {
                 record_t* record = records->all_records[i];
                 printf(
                         "\033[1;37m~ name: %s\n"
-                        "~ id: %d\n"
+                        "~ id: %ld\n"
                         "~ phone number: %d\n"
                         "~ reason: %s\n"
                         "~ cost: $%d\033[0m\n\n"
@@ -145,7 +145,7 @@ void show_search(char* filename, record_t* record, char* name, long id) {
             printf(
             "~~ Searching in %s (type a name or an id)\n\n"
             "\033[1;37m~ name: %s\n"
-            "~ id: %d\033[0m\n\n"
+            "~ id: %ld\033[0m\n\n"
             "\033[1;31m[B] to go back\033[0m\n\n",
             filename, name, id
             );
@@ -153,7 +153,7 @@ void show_search(char* filename, record_t* record, char* name, long id) {
             printf(
             "~~ Searched in %s\n\n"
             "\033[1;37m~ name: %s\n"
-            "~ id: %d\n"
+            "~ id: %ld\n"
             "~ phone number: %d\n"
             "~ reason: %s\n"
             "~ cost: $%d\033[0m\n\n"
@@ -252,15 +252,9 @@ void register_record_component(const char* filename, char* record_type) {
                     cost = atoi(user_input);
                 }
                 creating_record(name, id, phone_number, reason, cost, record_type);
+                free(user_input);
             } 
             
-            free(user_input);
-            if (strcmp(name, "\0") != 0) {
-                free(name);
-            }
-            if (strcmp(reason, "\0") != 0) {
-                free(reason);
-            }
             user_input = NULL; 
         } else {
             printf("System closed\n");
@@ -392,16 +386,10 @@ void search_component() {
                     strcpy(name, user_input);
                     record = find_record_by_name(filename, name);
                 }
+                free(user_input);
             }
             show_search(filename, record, name, id);
             
-            free(user_input);
-            if (strcmp(name, "\0") != 0) {
-                free(name);
-            }
-            if (strcmp(filename, "\0") != 0) {
-                free(filename);
-            }
             if (record) {
                 destroy_record(record);
             }
@@ -452,7 +440,6 @@ void show_records_component() {
                 return;
             }
             
-            free(user_input);
             if (records) {
                 destroy_record_array(records);
             }
@@ -521,10 +508,6 @@ void single_clear_component() {
                 return;
             }
 
-            free(user_input);
-            if (strcmp(filename, "\0") != 0) {
-                free(filename);
-            }
             user_input = NULL;
         } else {
             printf("System closed\n");
@@ -561,7 +544,6 @@ void clear_all_component() {
                 return;
             }
 
-            free(user_input);
             user_input = NULL;
         } else {
             printf("System closed\n");
