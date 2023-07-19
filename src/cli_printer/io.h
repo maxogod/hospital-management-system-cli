@@ -7,9 +7,7 @@ void home_component();
 
 void register_record_component(const char* filename, char* record_type);
 
-void discharge_component();
-
-void remove_consultation_component();
+void remove_record_component(const char* filename, char* record_type);
 
 void search_component();
 

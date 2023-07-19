@@ -30,9 +30,9 @@ int main() {
             } else if (strcmp(user_input, "C") == 0) {
                 register_record_component(CONSULTATION_FILE, "Registering new consultation");
             } else if (strcmp(user_input, "D") == 0) {
-                discharge_component();
+                remove_record_component(HOSPITALIZATION_FILE, "Discharging patient");
             } else if (strcmp(user_input, "R") == 0) {
-                remove_consultation_component();
+                remove_record_component(CONSULTATION_FILE, "Removing consultation from waitlist");
             } else if (strcmp(user_input, "S") == 0) {
                 search_component();
             } else if (strcmp(user_input, "A") == 0) {
