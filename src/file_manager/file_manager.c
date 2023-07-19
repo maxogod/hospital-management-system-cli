@@ -18,7 +18,7 @@ void add_new_record(const char* filename, record_t* record) {
         fflush(file); // make sure to write the first line
     }
 
-    fprintf(file, "%s,%d,%d,%s,%d\n", record->name, record->id, record->phone_number, record->reason, record->cost);
+    fprintf(file, "%s,%ld,%d,%s,%d\n", record->name, record->id, record->phone_number, record->reason, record->cost);
 
     fclose(file);
 }
