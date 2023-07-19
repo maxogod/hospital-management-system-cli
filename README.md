@@ -30,7 +30,7 @@ gcc .\src\system.c .\src\records\record.c .\src\file_manager\file_manager.c .\sr
 
 ![home](./img/home.png)
 
-### to hospitalize a patient by id (register consultation is the same)
+### to hospitalize a patient (register consultation is the same)
 
 ![hospitalizing](./img/hospitalizing.png)
 
