@@ -1,6 +1,6 @@
 # Hospital ER management system
 
-A cli tool for managing hospital patients in the ER.
+A cli tool for managing hospital records in the ER.
 
 ![chart](./img/chart.png)
 
