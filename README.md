@@ -26,7 +26,7 @@ gcc .\src\system.c .\src\records\record.c .\src\file_manager\file_manager.c .\sr
 
 ## How it looks
 
-(dont mind my wallpaper)
+(dont mind my wallpaper 😅)
 
 ![home](./img/home.png)
 
