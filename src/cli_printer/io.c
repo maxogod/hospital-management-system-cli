@@ -100,6 +100,34 @@ void show_all_records(char* filename, record_array_t* records) {
             );
 }
 
+void show_clear_file(char* filename) {
+    system("cls");
+    ascii_art();
+    
+    if (strcmp(filename, "\0") == 0) {
+        printf(
+            "~~ Select a file\n\n"
+            "~ \033[1;33m[H] hospitalization file\033[0m\n"
+            "~ \033[1;33m[C] consultation file\033[0m\n"
+            "~ \033[1;33m[O] history file\033[0m\n\n"
+            "\033[1;31m[B] to go back\033[0m\n\n"
+            );
+    } else if (strcmp(filename, "ALL") == 0) {
+        printf(
+                "~~ \033[1;33mAre you sure you want to delete *all files*? this action cannot be undone\033[0m\n\n"
+                "\033[1;32m[Y] to confirm\033[0m\n"
+                "\033[1;31m[B] to go back\033[0m\n\n"
+                );
+    } else {
+        printf(
+                "~~ \033[1;33mAre you sure you want to delete %s? this action cannot be undone\033[0m\n\n"
+                "\033[1;32m[Y] to confirm\033[0m\n"
+                "\033[1;31m[B] to go back\033[0m\n\n",
+                filename
+                );
+    }
+}
+
 void show_search(char* filename, record_t* record, char* name, long id) {
     system("cls");
     ascii_art();
@@ -180,10 +208,10 @@ void register_record_component(const char* filename, char* record_type) {
             if (strcmp(user_input, "Y") == 0) {
                 free(user_input);
 
-                if (strcmp(name, "\0") == 0) {
+                if (strcmp(name, "\0") != 0) {
                     free(name);
                 }
-                if (strcmp(reason, "\0") == 0) {
+                if (strcmp(reason, "\0") != 0) {
                     free(reason);
                 }
 
@@ -194,10 +222,10 @@ void register_record_component(const char* filename, char* record_type) {
                 return;
             } else if (strcmp(user_input, "C") == 0) {
                 free(user_input);
-                if (strcmp(name, "\0") == 0) {
+                if (strcmp(name, "\0") != 0) {
                     free(name);
                 }
-                if (strcmp(reason, "\0") == 0) {
+                if (strcmp(reason, "\0") != 0) {
                     free(reason);
                 }
                 return;
@@ -227,10 +255,10 @@ void register_record_component(const char* filename, char* record_type) {
             } 
             
             free(user_input);
-            if (strcmp(name, "\0") == 0) {
+            if (strcmp(name, "\0") != 0) {
                 free(name);
             }
-            if (strcmp(name, "\0") == 0) {
+            if (strcmp(reason, "\0") != 0) {
                 free(reason);
             }
             user_input = NULL; 
@@ -436,7 +464,109 @@ void show_records_component() {
     }
 }
 
-void single_clear_component() {}
+void single_clear_component() {
+    char input[MAX_INPUT_SIZE];
+    char* user_input = NULL;
 
-void clear_all_component() {}
+    char* filename = "\0";
+    show_clear_file(filename);
+
+    while (1) {
+        printf("Your input: ");
+        if (fgets(input, sizeof(input), stdin)) {
+            input[strcspn(input, "\n")] = '\0';
+
+            user_input = malloc(strlen(input) + 1);
+            if (!user_input) {
+                continue;
+            }
+            strcpy(user_input, input);
+
+            if (strcmp(user_input, "H") == 0) {
+                free(user_input);
+                filename = malloc(strlen(HOSPITALIZATION_FILE) + 1);
+                if (!filename) {
+                    continue;
+                }
+                strcpy(filename, HOSPITALIZATION_FILE);
+                show_clear_file(filename);
+            } else if (strcmp(user_input, "C") == 0) {
+                free(user_input);
+                filename = malloc(strlen(CONSULTATION_FILE) + 1);
+                if (!filename) {
+                    continue;
+                }
+                strcpy(filename, CONSULTATION_FILE);
+                show_clear_file(filename);
+            } else if (strcmp(user_input, "O") == 0) {
+                free(user_input);
+                filename = malloc(strlen(HISTORY_FILE) + 1);
+                if (!filename) {
+                    continue;
+                }
+                strcpy(filename, HISTORY_FILE);
+                show_clear_file(filename);
+            } else if (strcmp(user_input, "Y") == 0) {
+                free(user_input);
+                if (strcmp(filename, "\0") == 0) {
+                    continue;
+                }
+                clear_file(filename);
+                printf("\033[1;32mDELETED %s\033[0m\n\n", filename);
+            } else if (strcmp(user_input, "B") == 0) {
+                free(user_input);
+                if (strcmp(filename, "\0") != 0) {
+                    free(filename);
+                }
+                return;
+            }
+
+            free(user_input);
+            if (strcmp(filename, "\0") != 0) {
+                free(filename);
+            }
+            user_input = NULL;
+        } else {
+            printf("System closed\n");
+            return;
+        }
+    }
+}
+
+void clear_all_component() {
+    char input[MAX_INPUT_SIZE];
+    char* user_input = NULL;
+
+    show_clear_file("ALL");
+
+    while (1) {
+        printf("Your input: ");
+        if (fgets(input, sizeof(input), stdin)) {
+            input[strcspn(input, "\n")] = '\0';
+
+            user_input = malloc(strlen(input) + 1);
+            if (!user_input) {
+                continue;
+            }
+            strcpy(user_input, input);
+
+            if (strcmp(user_input, "Y") == 0) {
+                free(user_input);
+                clear_file(HOSPITALIZATION_FILE);
+                clear_file(CONSULTATION_FILE);
+                clear_file(HISTORY_FILE);
+                printf("\033[1;32mDELETED %s - %s - %s\033[0m\n\n", HOSPITALIZATION_FILE, CONSULTATION_FILE, HISTORY_FILE);
+            } else if (strcmp(user_input, "B") == 0) {
+                free(user_input);
+                return;
+            }
+
+            free(user_input);
+            user_input = NULL;
+        } else {
+            printf("System closed\n");
+            return;
+        }
+    }
+}
 
