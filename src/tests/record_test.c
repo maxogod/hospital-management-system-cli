@@ -5,7 +5,7 @@
 
 void test_record_creation() {
 
-    record_t* rec = create_record("max", 340, 15032, "headache", 20);
+    record_t* rec = create_record("mapo", 251, 21032, "hypoglycemia", 50);
 
     add_new_record(HOSPITALIZATION_FILE, rec);
 
@@ -38,3 +38,14 @@ void test_find_by_id() {
     destroy_record(rec);
     return;
 }
+
+void test_get_all_records() {
+    record_array_t* records = get_all_records(HOSPITALIZATION_FILE);
+    
+    for (int i = 0; i < records->len; i++) {
+        printf("%s,%d\n", records->all_records[i]->name, records->all_records[i]->id);
+    }
+
+    destroy_record_array(records);
+}
+
